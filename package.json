@@ -1,0 +1,32 @@
+{
+  "name": "marcyinthekitchen",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blakevanlan/marcyinthekitchen.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/blakevanlan/marcyinthekitchen/issues"
+  },
+  "homepage": "https://github.com/blakevanlan/marcyinthekitchen#readme",
+  "dependencies": {
+    "coffee-script": "^1.12.2",
+    "compression": "^1.6.2",
+    "connect-assets": "^5.4.0",
+    "csswring": "^5.1.0",
+    "pug": "^2.0.0-beta6",
+    "stylus": "^0.54.5",
+    "typescript": "^2.1.4",
+    "uglify-js": "^2.7.5"
+  }
+}
