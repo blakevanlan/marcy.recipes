@@ -2,7 +2,12 @@ Zlib = require('zlib')
 Fs = require('fs')
 
 standardize = (str) ->
-   return str.replace(/[\s-]/g, '-').replace(/['\/\(\)\\]/g, '').toLowerCase()
+   return str.replace(/[\s-_]/g, '-').replace(/["'\/\(\)\\,]/g, '').toLowerCase()
+
+tokenize = (value) ->
+   if value instanceof Array
+      value = value.join('-')
+   return standardize(value).split('-')
 
 readPaprikaRecipeFile = (filename, callback) ->
    gunzip = Zlib.createGunzip()
@@ -28,6 +33,7 @@ writeBase64Image = (filename, data) ->
 
 module.exports = {
    standardize: standardize
+   tokenize: tokenize
    readPaprikaRecipeFile: readPaprikaRecipeFile
    writeBase64Image: writeBase64Image
 }
