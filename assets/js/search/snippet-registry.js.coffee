@@ -19,6 +19,7 @@ do ->
                remainingQueries.push(outstandingQuery)
 
          @outstandingQueries_ = remainingQueries
+         @removeScriptTag_(id)
 
       query: (id, callback) ->
          @queryAll([id], callback)
@@ -54,8 +55,13 @@ do ->
          scriptTag = document.createElement('script');
          scriptTag.src = "/snippets/#{id}.js"
          scriptTag.type = "text/javascript"
-         document.getElementsByTagName("head")[0].appendChild(script)
+         document.getElementsByTagName("head")[0].appendChild(scriptTag)
          @scriptTagsById_[id] = scriptTag
+
+      removeScriptTag_: (id) ->
+         scriptTag = @scriptTagsById_[id]
+         @scriptTagsById_[id] = null
+         document.getElementsByTagName("head")[0].removeChild(scriptTag)
 
 
    window.SnippetRegistry = new SnippetRegistry()
