@@ -7,7 +7,6 @@ const Generator = require('./build/generator');
 const Path = require('path');
 const Utils = require('./build/utils');
 const Assets = require('./build/assets');
-const InvertedIndex = require('./build/inverted-index');
 
 console.log("\nBuilding assets:\n")
 
@@ -21,8 +20,8 @@ Utils.readPaprikaRecipeFile(filename, function(err, paprikaRecipe) {
    Generator.generateHomePage()
    Generator.generateSearchPage()
    Generator.generateRecipePage(paprikaRecipe)
-
-   console.log(InvertedIndex.generateInvertedIndex([paprikaRecipe]));
+   Generator.generateRecipeSnippet(paprikaRecipe)
+   Generator.generateInvertedIndex([paprikaRecipe]);
 
    console.log('\nDone.')
 });

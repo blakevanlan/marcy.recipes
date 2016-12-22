@@ -1,3 +1,5 @@
+//= require jquery.js
+
 /*!
  * Knockout JavaScript library v3.4.1
  * (c) The Knockout.js team - http://knockoutjs.com/

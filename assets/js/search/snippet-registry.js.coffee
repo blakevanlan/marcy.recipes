@@ -1,0 +1,61 @@
+do ->
+
+   class SnippetRegistry
+      constructor: ->
+         @snippetsById_ = {}
+         @outstandingQueries_ = []
+         @scriptTagsById_ = {}
+
+      loaded: (id, snippet) ->
+         @snippetsById_[id] = snippet
+
+         remainingQueries = []
+         for outstandingQuery in @outstandingQueries_
+            # Call the callback if all of the snippets have loaded.
+            snippets = @queryAllSync(outstandingQuery.ids)
+            if snippets
+               callback(null, snippets)
+            else
+               remainingQueries.push(outstandingQuery)
+
+         @outstandingQueries_ = remainingQueries
+
+      query: (id, callback) ->
+         @queryAll([id], callback)
+
+      queryAll: (ids, callback) ->
+         snippets = @queryAllSync(ids)
+         if snippets
+            setTimeout ->
+               callback(null, snippets)
+            , 0
+            return
+
+         # We need to load the snippet.
+         @outstandingQueries_.push({
+            ids: ids
+            callback: callback
+         })
+         @loadSnippets_(id) for id in ids         
+      
+      queryAllSync: (ids) ->
+         snippets = []
+         for id in ids
+            snippet = @snippetsById_[id]
+            if snippet
+               snippets.push(snippet)
+            else
+               return null
+         return snippets
+
+      loadSnippets_: (id) ->
+         # Check if we are already loading the snippet.
+         return if @scriptTagsById_[id]
+         scriptTag = document.createElement('script');
+         scriptTag.src = "/snippets/#{id}.js"
+         scriptTag.type = "text/javascript"
+         document.getElementsByTagName("head")[0].appendChild(script)
+         @scriptTagsById_[id] = scriptTag
+
+
+   window.SnippetRegistry = new SnippetRegistry()
