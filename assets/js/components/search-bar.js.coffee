@@ -8,9 +8,9 @@ do ->
 
 
    # TODO: figure out template
-   ko.components.register("search-bar", 
+   ko.components.register("search-bar", {
       viewModel: SearchBarComponent,
       template: "<input",
-   )
+   })
 
    window.SearchBarComponent = SearchBarComponent
