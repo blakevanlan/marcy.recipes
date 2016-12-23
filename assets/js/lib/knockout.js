@@ -1,4 +1,4 @@
-//= require jquery.js
+//= require lib/jquery.js
 
 /*!
  * Knockout JavaScript library v3.4.1

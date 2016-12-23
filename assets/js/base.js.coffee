@@ -1,1 +1,1 @@
-#= require inverted-index/inverted-index.js.coffee
+#= require search/inverted-index.js.coffee

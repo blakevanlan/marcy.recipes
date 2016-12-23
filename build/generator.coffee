@@ -5,7 +5,7 @@ Pug = require('pug')
 Utils = require('./utils')
 
 MAIN_DIRECTORY = Path.join(__dirname, '../docs')
-IMAGES_DIRECTORY = Path.join(__dirname, '../docs/images')
+IMAGES_DIRECTORY = Path.join(__dirname, '../docs/images/recipes')
 RECIPES_DIRECTORY = Path.join(__dirname, '../docs/recipes')
 SNIPPETS_DIRECTORY = Path.join(__dirname, "../docs/snippets")
 INVERTED_INDEX_FILENAME = Path.join(__dirname, '../docs/inverted-index.js')
@@ -81,7 +81,7 @@ createLocalPageUrl = (standardizedName) ->
    return "/recipes/#{standardizedName}.html"
 
 createLocalPhotoUrl = (standardizedName) ->
-   return "/images/#{standardizedName}.jpg"
+   return "/images/recipes/#{standardizedName}.jpg"
 
 
 module.exports = {
