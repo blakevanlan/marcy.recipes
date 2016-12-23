@@ -1,0 +1,1 @@
+#= require search/inverted-index.js.coffee

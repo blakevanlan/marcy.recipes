@@ -8,7 +8,9 @@ ASSET_DIRECTORY = Path.join(__dirname, '../docs');
 
 ASSET_FILENAMES = [
    'main.css',
-   'recipe-page.js'
+   'index-bootstrap.js'
+   'recipe-bootstrap.js'
+   'search-bootstrap.js'
 ]
 
 compileAssets = -> 
