@@ -1,5 +1,5 @@
 #= require base.js.coffee
-#= require lib/all.js.
+#= require lib/all.js
 #= require viewmodels/recipe.js.coffee
 
 do ->
