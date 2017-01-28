@@ -6,5 +6,5 @@ do ->
    RecipeViewModel = window.RecipeViewModel
 
    $(document).ready ->
-      $.cookie.json = true
       vm = new RecipeViewModel()
+      ko.applyBindings(vm)

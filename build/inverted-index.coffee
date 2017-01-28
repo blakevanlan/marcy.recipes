@@ -55,6 +55,7 @@ appendTokensToInvertedIndex = (invertedIndex, id, tokens, weight) ->
       tokenValue = invertedIndex[token]
       tokenValue.t += tokensToOccurrences[token]
       tokenValue.f.push({
+         id: id
          w: weight
          o: tokensToOccurrences[token]
       })

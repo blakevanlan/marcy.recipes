@@ -1,10 +1,11 @@
 extends layout.pug
 
 block head
-   script(src="/recipe-page.js")
-   script(src="/inverted-index.js", async="true")
+   != js("recipe-bootstrap")
 
 block content
+   search-bar(params="callback: onSearch")
+
    article
       h1= title
 

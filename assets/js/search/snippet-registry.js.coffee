@@ -14,7 +14,7 @@ do ->
             # Call the callback if all of the snippets have loaded.
             snippets = @queryAllSync(outstandingQuery.ids)
             if snippets
-               callback(null, snippets)
+               outstandingQuery.callback(null, snippets)
             else
                remainingQueries.push(outstandingQuery)
 

@@ -8,20 +8,23 @@ const Path = require('path');
 const Utils = require('./build/utils');
 const Assets = require('./build/assets');
 
-console.log("\nBuilding assets:\n")
+// Parse for debug option.
+const debug = (process.argv.length == 3 && process.argv[2] === '-d');
 
-Assets.compileAssets()
+console.log("\nBuilding assets:\n");
 
-console.log("\nGenerating pages:\n")
+Assets.compileAssets(debug);
+
+console.log("\nGenerating pages:\n");
 
 const filename = Path.join(__dirname, 'recipes/Soy.paprikarecipe');
 Utils.readPaprikaRecipeFile(filename, function(err, paprikaRecipe) {
    if (err) throw err;
-   Generator.generateHomePage()
-   Generator.generateSearchPage()
-   Generator.generateRecipePage(paprikaRecipe)
-   Generator.generateRecipeSnippet(paprikaRecipe)
+   Generator.generateHomePage();
+   Generator.generateSearchPage();
+   Generator.generateRecipePage(paprikaRecipe);
+   Generator.generateRecipeSnippet(paprikaRecipe);
    Generator.generateInvertedIndex([paprikaRecipe]);
 
-   console.log('\nDone.')
+   console.log('\nDone.');
 });

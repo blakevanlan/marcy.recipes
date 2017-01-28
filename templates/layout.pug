@@ -4,8 +4,9 @@ html
       title marcy.recipes
       meta(http-equiv="X-UA-Compatible", content="IE=edge,chrome=1")
       meta(name="viewport", content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no")
-      link(href="/main.css", rel="stylesheet")
       link(href="https://fonts.googleapis.com/css?family=Dosis:200,700", rel="stylesheet")
+      != css("main")
+
       //script.
          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -16,6 +17,9 @@ html
          ga('send', 'pageview');
 
       block head
+
+      //- Inverted index has to be generated with ./build.js
+      script(src="/inverted-index.js", async="true")
 
    body
       block content

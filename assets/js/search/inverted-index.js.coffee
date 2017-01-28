@@ -15,7 +15,7 @@ do ->
          @invertedIndex_ = invertedIndex
          for outstandingQuery in @outstandingQueries_
             results = @searchInvertedIndex_(outstandingQuery.query)
-            callback(null, results)
+            outstandingQuery.callback(null, results)
          @outstandingQueries_ = []
 
       search: (query, callback) ->

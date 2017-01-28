@@ -3,13 +3,11 @@
 
 do ->
 
-   class RecipeViewModel
+   class IndexViewModel
       constructor: ->
-         @searchQuery
 
       onSearch: (search) ->
-         
+         debugger
 
 
-
-   window.RecipeViewModel = RecipeViewModel
+   window.IndexViewModel = IndexViewModel

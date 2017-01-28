@@ -25,41 +25,48 @@ indexTemplate = Pug.compileFile(Path.join(__dirname, '../templates/index.pug'))
 recipeTemplate = Pug.compileFile(Path.join(__dirname, '../templates/recipe.pug'))
 searchTemplate = Pug.compileFile(Path.join(__dirname, '../templates/search.pug'))
 
+renderOptions = {
+   basedir: Path.join(__dirname, '../templates')
+   isProduction: true
+   css: (file) -> return '<link rel="stylesheet" href="/' + file + '.css">'
+   js: (file) -> return '<script src="/' + file + '.js"></script>'
+}
+
 generateHomePage = ->
-   html = indexTemplate();
+   html = indexTemplate(renderOptions);
    filename = Path.join(MAIN_DIRECTORY, "index.html")
    Fs.writeFileSync(filename, html)
 
    console.log("Generated index.html")
 
 generateSearchPage = ->
-   html = searchTemplate();
+   html = searchTemplate(renderOptions);
    filename = Path.join(MAIN_DIRECTORY, "search.html")
    Fs.writeFileSync(filename, html)
 
    console.log("Generated search.html")
 
 generateRecipePage = (paprikaRecipe) -> 
-   standardizedName = Utils.standardize(paprikaRecipe.name)
+   standardizedName = paprikaRecipe.standardized_name
 
    # Write the image file to disk.
    imageFilename = Path.join(IMAGES_DIRECTORY, "#{standardizedName}.jpg")
-   paprikaRecipe.photo_local_url = createLocalPhotoUrl(standardizedName)
    Utils.writeBase64Image(imageFilename, paprikaRecipe.photo_data)
 
    # Generate the recipe page.
-   recipeHtml = recipeTemplate(paprikaRecipe);
+   options = Object.assign({}, renderOptions, paprikaRecipe)
+   recipeHtml = recipeTemplate(options)
    recipeFilename = Path.join(RECIPES_DIRECTORY, "#{standardizedName}.html")
    Fs.writeFileSync(recipeFilename, recipeHtml)
 
    console.log("Generated recipes/#{standardizedName}.html")
 
 generateRecipeSnippet = (paprikaRecipe) ->
-   standardizedName = Utils.standardize(paprikaRecipe.name)
+   standardizedName = paprikaRecipe.standardized_name
    snippet = {
-      id: standardizedName
-      local_url: createLocalPageUrl
-      local_photo_url: createLocalPhotoUrl()
+      standardizedName: standardizedName
+      local_url: Utils.createLocalPageUrl(standardizedName)
+      local_photo_url: Utils.createLocalPhotoUrl(standardizedName)
    }
    for field in FIELDS_IN_SNIPPET
       snippet[field] = paprikaRecipe[field]
@@ -76,12 +83,6 @@ generateInvertedIndex = (paprikaRecipes) ->
    Fs.writeFileSync(INVERTED_INDEX_FILENAME, script)
 
    console.log('Generated inverted_index.js')
-
-createLocalPageUrl = (standardizedName) ->
-   return "/recipes/#{standardizedName}.html"
-
-createLocalPhotoUrl = (standardizedName) ->
-   return "/images/recipes/#{standardizedName}.jpg"
 
 
 module.exports = {

@@ -1,15 +1,16 @@
 extends layout.pug
 
-block content
-   .background-left-side
-   .background-right-side
-   
-   .red-ornament
-   .green-ornament
-   .white-ornament
-      
-   .title
-      span.name marcy
-      span.domain .recipes
+block head
+   != js("index-bootstrap")
 
-   .subtitle your own recipe site, <br> coming soon!
+block content
+   .top-highlight
+
+   .header
+      search-bar(params="callback: onSearch")   
+
+   .container
+      .sidebar
+      .content
+
+   .footer

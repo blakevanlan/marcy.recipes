@@ -21,6 +21,8 @@ readPaprikaRecipeFile = (filename, callback) ->
       content = null
       try
          content = JSON.parse(buffer.join(''))
+         content.standardized_name = standardize(content.name)
+         content.photo_local_url = createLocalPhotoUrl(content.standardized_name)
       catch e
          return callback(e)
       
@@ -30,10 +32,24 @@ writeBase64Image = (filename, data) ->
    buffer = new Buffer(data, 'base64')
    Fs.writeFileSync(filename, buffer)
 
+createIndexPageRenderOptions = (paprikaRecipes) ->
+   
+   return {
+      paprikaRecipes: paprikaRecipes
+   }
+
+createLocalPageUrl = (standardizedName) ->
+   return "/recipes/#{standardizedName}.html"
+
+createLocalPhotoUrl = (standardizedName) ->
+   return "/images/recipes/#{standardizedName}.jpg"
+
 
 module.exports = {
    standardize: standardize
    tokenize: tokenize
    readPaprikaRecipeFile: readPaprikaRecipeFile
    writeBase64Image: writeBase64Image
+   createLocalPageUrl: createLocalPageUrl
+   createLocalPhotoUrl: createLocalPhotoUrl
 }
