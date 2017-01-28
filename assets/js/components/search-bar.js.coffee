@@ -23,7 +23,7 @@ do ->
          @autocompleteSnippets.removeAll()
          return if !value or value.length < 1
 
-         invertedIndex.search value, (err, entries) =>
+         invertedIndex.search value, null, (err, entries) =>
             return if err or @currentQuery != value
             for entry in entries
                snippetRegistry.query entry.id, (err, snippets) =>

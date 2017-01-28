@@ -1,7 +1,7 @@
 Path = require('path')
 Utils = require('./utils')
 
-KEYS_TO_WEIGHTS = {
+FIELDS_TO_WEIGHTS = {
    'categories': 10,
    'ingredients': 1,
    'name': 5,
@@ -16,6 +16,7 @@ KEYS_TO_WEIGHTS = {
 #       f: [
 #         {
 #           id: <document id>
+#           n: <name of the field> 
 #           w: <weight of this reference>
 #           o: <number of occurences in this field>
 #         },
@@ -29,15 +30,15 @@ createInvertedIndex = (paprikaRecipes) ->
    invertedIndex = {}
    
    # Tokenize each field and record the tokens in the inverted index.
-   for key, weight of KEYS_TO_WEIGHTS
+   for field, weight of FIELDS_TO_WEIGHTS
       for paprikaRecipe in paprikaRecipes
          standardizedName = Utils.standardize(paprikaRecipe.name)
-         tokens = Utils.tokenize(paprikaRecipe[key])
-         appendTokensToInvertedIndex(invertedIndex, standardizedName, tokens, weight)
+         tokens = Utils.tokenize(paprikaRecipe[field])
+         appendTokensToInvertedIndex(invertedIndex, standardizedName, field, tokens, weight)
 
    return invertedIndex
 
-appendTokensToInvertedIndex = (invertedIndex, id, tokens, weight) ->
+appendTokensToInvertedIndex = (invertedIndex, id, field, tokens, weight) ->
    tokensToOccurrences = {}
    
    # Dedup token occurences.
@@ -56,6 +57,7 @@ appendTokensToInvertedIndex = (invertedIndex, id, tokens, weight) ->
       tokenValue.t += tokensToOccurrences[token]
       tokenValue.f.push({
          id: id
+         n: field
          w: weight
          o: tokensToOccurrences[token]
       })

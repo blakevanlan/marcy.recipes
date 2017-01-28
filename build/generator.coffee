@@ -7,7 +7,8 @@ Utils = require('./utils')
 MAIN_DIRECTORY = Path.join(__dirname, '../docs')
 IMAGES_DIRECTORY = Path.join(__dirname, '../docs/images/recipes')
 RECIPES_DIRECTORY = Path.join(__dirname, '../docs/recipes')
-SNIPPETS_DIRECTORY = Path.join(__dirname, "../docs/snippets")
+SNIPPETS_DIRECTORY = Path.join(__dirname, '../docs/snippets')
+MANIFEST_FILENAME = Path.join(__dirname, '../docs/manifest.json')
 INVERTED_INDEX_FILENAME = Path.join(__dirname, '../docs/inverted-index.js')
 
 FIELDS_IN_SNIPPET = [
@@ -32,12 +33,31 @@ renderOptions = {
    js: (file) -> return '<script src="/' + file + '.js"></script>'
 }
 
+generateManifest = (paprikaRecipes) ->
+   manifest = JSON.parse(Fs.readFileSync(MANIFEST_FILENAME).toString());
+   existingRecipes = manifest.recipes or {}
+   recipes = {}
+   for paprikaRecipe in paprikaRecipes
+      recipe = existingRecipes[paprikaRecipe.standardized_name]
+      unless recipe
+         recipe = {
+            timestamp: Date.now()
+         }
+      recipes[paprikaRecipe.standardized_name] = recipe
+
+   manifest.recipes = recipes
+   Fs.writeFileSync(MANIFEST_FILENAME, JSON.stringify(manifest, null, 3))
+
+   console.log("Generated manifest.json")
+   return manifest
+
 generateHomePage = ->
    html = indexTemplate(renderOptions);
    filename = Path.join(MAIN_DIRECTORY, "index.html")
    Fs.writeFileSync(filename, html)
 
    console.log("Generated index.html")
+   return html
 
 generateSearchPage = ->
    html = searchTemplate(renderOptions);
@@ -45,6 +65,7 @@ generateSearchPage = ->
    Fs.writeFileSync(filename, html)
 
    console.log("Generated search.html")
+   return html
 
 generateRecipePage = (paprikaRecipe) -> 
    standardizedName = paprikaRecipe.standardized_name
@@ -60,6 +81,7 @@ generateRecipePage = (paprikaRecipe) ->
    Fs.writeFileSync(recipeFilename, recipeHtml)
 
    console.log("Generated recipes/#{standardizedName}.html")
+   return recipeHtml
 
 generateRecipeSnippet = (paprikaRecipe) ->
    standardizedName = paprikaRecipe.standardized_name
@@ -76,6 +98,7 @@ generateRecipeSnippet = (paprikaRecipe) ->
    Fs.writeFileSync(filename, script)
 
    console.log("Generated snippets/#{standardizedName}.js")
+   return script
 
 generateInvertedIndex = (paprikaRecipes) ->
    invertedIndex = InvertedIndex.createInvertedIndex(paprikaRecipes)
@@ -83,9 +106,11 @@ generateInvertedIndex = (paprikaRecipes) ->
    Fs.writeFileSync(INVERTED_INDEX_FILENAME, script)
 
    console.log('Generated inverted_index.js')
+   return script
 
 
 module.exports = {
+   generateManifest: generateManifest
    generateHomePage: generateHomePage
    generateSearchPage: generateSearchPage
    generateRecipePage: generateRecipePage

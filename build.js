@@ -20,6 +20,7 @@ console.log("\nGenerating pages:\n");
 const filename = Path.join(__dirname, 'recipes/Soy.paprikarecipe');
 Utils.readPaprikaRecipeFile(filename, function(err, paprikaRecipe) {
    if (err) throw err;
+   var manifest = Generator.generateManifest([paprikaRecipe]);
    Generator.generateHomePage();
    Generator.generateSearchPage();
    Generator.generateRecipePage(paprikaRecipe);
