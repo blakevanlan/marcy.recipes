@@ -1,0 +1,1 @@
+window.SnippetRegistry.loaded('3-ingredient-homemade-larabars-recipe', {"standardized_name":"3-ingredient-homemade-larabars-recipe","name":"3-Ingredient Homemade Larabars Recipe","cook_time":"","prep_time":"","servings":"","categories":["Paleo/Whole 30"],"source":"","source_url":"","local_url":"/recipes/3-ingredient-homemade-larabars-recipe.html"});

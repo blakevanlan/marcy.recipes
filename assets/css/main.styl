@@ -6,10 +6,76 @@
 /**
  * Index.html
  */
- .top-highlight
-   height: 12px 
-   margin: 0 0 16px 0 
+.top-highlight
+   height: 10px
+   background: dark-blue
+
+header
+   .search-bar
+      position: absolute
+
+.title
+   position: relative
+   padding: 36px 0
+   font-size: 36px
+   font-family: 'Open Sans', sans-serif
+   text-align: center
+
+   .title__filter
+   .title__sep
+      font-weight: 300
+
+   .title__sep
+      margin: 0 12px
+
+   .title__text
+      font-weight: 700
+
 
 /**
- * Everything else.
+ * Main page.
  */ 
+.recipe-columns
+   display: flex
+   flex-direction: row
+
+.recipe-column
+   display: flex
+   flex-direction: column
+   flex: 1 1 auto
+
+.columns-three .recipe-column
+   width: 33%
+
+.recipe-snippet
+   box-sizing: border-box
+   cursor: pointer
+   font-family: 'Open Sans', sans-serif
+   padding: 12px
+   width: 100%
+   
+   &:hover
+      background: #f9f9f9
+
+.recipe-snippet__photo
+   width: 100%
+   margin-bottom: 12px
+
+.recipe-snippet__name
+   font-weight: 700
+   font-size: 16px
+
+.recipe-snippet__tags
+   font-weight: 300
+   font-size: 14px
+   
+.recipe-snippet__tags-link
+   color: #0096E2
+   
+.recipe-snippet__tags-none
+   color: #aaa
+
+.recipe-snippet__time
+   font-weight: 300
+   font-size: 14px
+   

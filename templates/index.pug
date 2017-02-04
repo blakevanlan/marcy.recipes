@@ -4,13 +4,40 @@ block head
    != js("index-bootstrap")
 
 block content
-   .top-highlight
-
    .header
       search-bar(params="callback: onSearch")   
+      .title
+         span.title__filter(data-bind="text: currentFilter")
+         span.title__sep -
+         span.title__text Recipes
 
    .container
       .sidebar
-      .content
+      .recipe-columns(data-bind="foreach: snippetColumns, css: columnClass, \
+            scrolledToBottom: onScrolledToBottom")
+         .recipe-column(data-bind="foreach: $data")
+            .recipe-snippet(data-bind="attr: {href: local_url}")
+               img.recipe-snippet__photo(data-bind="visible: $data.local_photo_url, \
+                     attr:{src: $data.local_photo_url}")
+               .recipe-snippet__name(data-bind="text: name")
+               .recipe-snippet__tags
+                  span.recipe-snippet__tags-title Tags:&nbsp;
+                  span(data-bind="foreach: $data.categories")
+                     a.recipe-snippet__tags-link(data-bind="text: $data")
+                     span(data-bind="visible: $index() != ($parent.categories.length-1)") ,&nbsp;
+                  span.recipe-snippet__tags-none(data-bind="visible: !$data.categories.length") None
+               .recipe-snippet__time(data-bind="visible: $data.prep_time")
+                  span.recipe-snippet__time__title Prep Time:&nbsp; 
+                  span.recipe-snippet__time__value(data-bind="text: $data.prep_time")
+               
+               .recipe-snippet__time(data-bind="visible: $data.cook_time")
+                  span.recipe-snippet__time__title Cook Time:&nbsp;
+                  span.recipe-snippet__time__value(data-bind="text: $data.cook_time")
+               
+               .recipe-snippet__time(data-bind="visible: $data.total_time")
+                  span.recipe-snippet__time__title Total Time:&nbsp;
+                  span.recipe-snippet__time__value(data-bind="text: $data.total_time")
+
+
 
    .footer

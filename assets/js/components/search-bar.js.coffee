@@ -1,7 +1,7 @@
 #= require lib/all.js
 #= require extensions/all.js
-#= require search/inverted-index.js.coffee
-#= require search/snippet-registry.js.coffee
+#= require data/inverted-index.js.coffee
+#= require data/snippet-registry.js.coffee
 
 do ->
    invertedIndex = window.InvertedIndex

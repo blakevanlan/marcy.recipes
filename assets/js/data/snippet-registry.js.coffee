@@ -60,8 +60,9 @@ do ->
 
       removeScriptTag_: (id) ->
          scriptTag = @scriptTagsById_[id]
-         @scriptTagsById_[id] = null
-         document.getElementsByTagName("head")[0].removeChild(scriptTag)
+         if scriptTag
+            @scriptTagsById_[id] = null
+            document.getElementsByTagName("head")[0].removeChild(scriptTag)
 
 
    window.SnippetRegistry = new SnippetRegistry()

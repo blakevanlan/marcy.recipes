@@ -8,18 +8,12 @@ MAIN_DIRECTORY = Path.join(__dirname, '../docs')
 IMAGES_DIRECTORY = Path.join(__dirname, '../docs/images/recipes')
 RECIPES_DIRECTORY = Path.join(__dirname, '../docs/recipes')
 SNIPPETS_DIRECTORY = Path.join(__dirname, '../docs/snippets')
+MOST_RECENT_DIRECTORY = Path.join(__dirname, '../docs/most-recent')
 MANIFEST_FILENAME = Path.join(__dirname, '../docs/manifest.json')
 INVERTED_INDEX_FILENAME = Path.join(__dirname, '../docs/inverted-index.js')
+CONFIG_FILENAME = Path.join(__dirname, '../assets/js/config.js.coffee')
 
-FIELDS_IN_SNIPPET = [
-   'name',
-   'cook_time',
-   'prep_time',
-   'servings',
-   'categories',
-   'source',
-   'source_url'
-]
+RECIPES_PER_MOST_RECENT_PAGE = 25
 
 # Compiled template functions
 indexTemplate = Pug.compileFile(Path.join(__dirname, '../templates/index.pug'))
@@ -33,16 +27,14 @@ renderOptions = {
    js: (file) -> return '<script src="/' + file + '.js"></script>'
 }
 
-generateManifest = (paprikaRecipes) ->
+generateManifest = (paprikaRecipes, config) ->
    manifest = JSON.parse(Fs.readFileSync(MANIFEST_FILENAME).toString());
    existingRecipes = manifest.recipes or {}
    recipes = {}
    for paprikaRecipe in paprikaRecipes
       recipe = existingRecipes[paprikaRecipe.standardized_name]
       unless recipe
-         recipe = {
-            timestamp: Date.now()
-         }
+         recipe = {timestamp: config.timestamp}
       recipes[paprikaRecipe.standardized_name] = recipe
 
    manifest.recipes = recipes
@@ -50,6 +42,33 @@ generateManifest = (paprikaRecipes) ->
 
    console.log("Generated manifest.json")
    return manifest
+
+generateMostRecentSnippets = (manifest, recipes, config) ->
+   recipes = recipes.slice(0)
+   recipes.sort (a, b) ->
+      timestampA = manifest.recipes[a.standardized_name].timestamp
+      timestampB = manifest.recipes[b.standardized_name].timestamp
+      return timestampB - timestampA
+
+   index = 0
+   snippets = []
+   snippetScripts = []
+   for recipe, index in recipes
+      snippets.push(Utils.createRecipeSnippet(recipe))
+
+      if index == recipes.length - 1 or snippets.length >= RECIPES_PER_MOST_RECENT_PAGE
+         pageNumber = Math.floor(index / RECIPES_PER_MOST_RECENT_PAGE)
+
+         script = "window.MostRecentRegistry.loaded('#{pageNumber}', #{JSON.stringify(snippets)});"
+         filename = Path.join(MOST_RECENT_DIRECTORY, "most-recent-recipes-#{pageNumber}.js")
+         Fs.writeFileSync(filename, script)
+         snippetScripts.push(script)
+         snippets = []
+         config.number_of_most_recent_pages = pageNumber
+
+         console.log("Generated most-recent/most-recent-recipes-#{pageNumber}.js")
+
+   return snippetScripts
 
 generateHomePage = ->
    html = indexTemplate(renderOptions);
@@ -71,9 +90,10 @@ generateRecipePage = (paprikaRecipe) ->
    standardizedName = paprikaRecipe.standardized_name
 
    # Write the image file to disk.
-   imageFilename = Path.join(IMAGES_DIRECTORY, "#{standardizedName}.jpg")
-   Utils.writeBase64Image(imageFilename, paprikaRecipe.photo_data)
-
+   if paprikaRecipe.photo_data
+      imageFilename = Path.join(IMAGES_DIRECTORY, "#{standardizedName}.jpg")
+      Utils.writeBase64Image(imageFilename, paprikaRecipe.photo_data)
+   
    # Generate the recipe page.
    options = Object.assign({}, renderOptions, paprikaRecipe)
    recipeHtml = recipeTemplate(options)
@@ -85,14 +105,7 @@ generateRecipePage = (paprikaRecipe) ->
 
 generateRecipeSnippet = (paprikaRecipe) ->
    standardizedName = paprikaRecipe.standardized_name
-   snippet = {
-      standardizedName: standardizedName
-      local_url: Utils.createLocalPageUrl(standardizedName)
-      local_photo_url: Utils.createLocalPhotoUrl(standardizedName)
-   }
-   for field in FIELDS_IN_SNIPPET
-      snippet[field] = paprikaRecipe[field]
-
+   snippet = Utils.createRecipeSnippet(paprikaRecipe)
    script = "window.SnippetRegistry.loaded('#{standardizedName}', #{JSON.stringify(snippet)});"
    filename = Path.join(SNIPPETS_DIRECTORY, "#{standardizedName}.js")
    Fs.writeFileSync(filename, script)
@@ -108,12 +121,21 @@ generateInvertedIndex = (paprikaRecipes) ->
    console.log('Generated inverted_index.js')
    return script
 
+generateJsConfig = (config) ->
+   script = "window.Config = #{JSON.stringify(config)}"
+   Fs.writeFileSync(CONFIG_FILENAME, script)
+
+   console.log("Generated assets/js/config.js.coffee")
+   return script
+
 
 module.exports = {
    generateManifest: generateManifest
+   generateMostRecentSnippets: generateMostRecentSnippets
    generateHomePage: generateHomePage
    generateSearchPage: generateSearchPage
    generateRecipePage: generateRecipePage
    generateRecipeSnippet: generateRecipeSnippet
    generateInvertedIndex: generateInvertedIndex
+   generateJsConfig: generateJsConfig
 }
