@@ -28,6 +28,8 @@ renderOptions = {
 }
 
 generateManifest = (paprikaRecipes, config) ->
+   console.log paprikaRecipes
+
    manifest = JSON.parse(Fs.readFileSync(MANIFEST_FILENAME).toString());
    existingRecipes = manifest.recipes or {}
    recipes = {}
@@ -39,8 +41,6 @@ generateManifest = (paprikaRecipes, config) ->
 
    manifest.recipes = recipes
    Fs.writeFileSync(MANIFEST_FILENAME, JSON.stringify(manifest, null, 3))
-
-   console.log("Generated manifest.json")
    return manifest
 
 generateMostRecentSnippets = (manifest, recipes, config) ->

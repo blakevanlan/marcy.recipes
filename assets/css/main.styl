@@ -10,16 +10,23 @@
    height: 10px
    background: dark-blue
 
-header
+.header
+   position: relative
+
    .search-bar
       position: absolute
+      top: 16px
+      right: 16px
 
 .title
    position: relative
    padding: 36px 0
+   margin: 0
    font-size: 36px
    font-family: 'Open Sans', sans-serif
    text-align: center
+   text-transform: lowercase
+   color: near-black
 
    .title__filter
    .title__sep
@@ -35,9 +42,48 @@ header
 /**
  * Main page.
  */ 
-.recipe-columns
+.container
    display: flex
    flex-direction: row
+   padding 0 24px
+   
+.sidebar
+   height: 100px
+   width: 120px
+   margin-right: 24px
+   flex-shrink: 0
+   font-family: 'Open Sans', sans-serif
+   
+.categories__heading
+   padding: 0
+   margin: 0
+   font-size: 18px
+   font-weight: 300
+   text-align: right
+   text-transform: uppercase
+   color: near-black
+
+.categories__list
+   display: flex
+   flex-direction: column
+   align-items: flex-end
+   border-right: 1px solid lightest-gray
+   padding: 0 12px 0 0
+   
+   li
+      list-style: none
+      text-align: right
+      padding: 0
+      color: bright-blue
+      font-style: italic
+      cursor: pointer
+
+.recipe-columns
+   display: flex
+   flex-grow: 1;
+   flex-direction: row
+   padding-top: 16px
+   border-top: 1px solid lightest-gray
 
 .recipe-column
    display: flex
@@ -49,13 +95,12 @@ header
 
 .recipe-snippet
    box-sizing: border-box
-   cursor: pointer
    font-family: 'Open Sans', sans-serif
    padding: 12px
    width: 100%
    
    &:hover
-      background: #f9f9f9
+      background: near-white
 
 .recipe-snippet__photo
    width: 100%
@@ -64,16 +109,19 @@ header
 .recipe-snippet__name
    font-weight: 700
    font-size: 16px
+   color: #333
 
 .recipe-snippet__tags
    font-weight: 300
    font-size: 14px
    
 .recipe-snippet__tags-link
-   color: #0096E2
+   font-style: italic
+   color: bright-blue
+   cursor: pointer
    
 .recipe-snippet__tags-none
-   color: #aaa
+   color: medium-gray
 
 .recipe-snippet__time
    font-weight: 300

@@ -1,6 +1,6 @@
 do ->
    standardize = (str) ->
-      return str.replace(/[\s-_]/g, '-').replace(/["'\/\(\)\\,]/g, '').toLowerCase()
+      return str.replace(/[\s-_+]/g, '-').replace(/["'\/\(\)\\,]/g, '').toLowerCase()
 
    tokenize = (value) ->
       return [] unless value?.length

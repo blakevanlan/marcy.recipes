@@ -8,6 +8,13 @@ FIELDS_TO_WEIGHTS = {
    'notes': 1
 }
 
+FIELDS_TO_ANALYZERS = {
+   'categories': Utils.standardizeToken,
+   'ingredients': Utils.tokenize,
+   'name': Utils.tokenize,
+   'notes': Utils.tokenize,
+}
+
 ###
 # Inverted index structure:
 #   {
@@ -33,7 +40,8 @@ createInvertedIndex = (paprikaRecipes) ->
    for field, weight of FIELDS_TO_WEIGHTS
       for paprikaRecipe in paprikaRecipes
          standardizedName = Utils.standardize(paprikaRecipe.name)
-         tokens = Utils.tokenize(paprikaRecipe[field])
+         analyzer = FIELDS_TO_ANALYZERS[field] || Utils.tokenize
+         tokens = analyzer(paprikaRecipe[field])
          appendTokensToInvertedIndex(invertedIndex, standardizedName, field, tokens, weight)
 
    return invertedIndex

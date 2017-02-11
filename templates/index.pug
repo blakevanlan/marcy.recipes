@@ -5,14 +5,19 @@ block head
 
 block content
    .header
-      search-bar(params="callback: onSearch")   
-      .title
+      h1.title
          span.title__filter(data-bind="text: currentFilterText")
          span.title__sep -
          span.title__text Recipes
+      search-bar(params="callback: onSearch")   
 
    .container
       .sidebar
+         h2.categories__heading Categories
+         ul.categories__list(data-bind="foreach: permanentCategories")
+            li 
+               a(data-bind="text: $data, click: $parent.onTagClicked")
+
       .recipe-columns(data-bind="foreach: snippetColumns, css: columnClass, \
             scrolledToBottom: onScrolledToBottom")
          .recipe-column(data-bind="foreach: $data")
@@ -23,7 +28,7 @@ block content
                .recipe-snippet__tags
                   span.recipe-snippet__tags-title Tags:&nbsp;
                   span(data-bind="foreach: $data.categories")
-                     a.recipe-snippet__tags-link(data-bind="text: $data")
+                     a.recipe-snippet__tags-link(data-bind="text: $data, click: $root.onTagClicked")
                      span(data-bind="visible: $index() != ($parent.categories.length-1)") ,&nbsp;
                   span.recipe-snippet__tags-none(data-bind="visible: !$data.categories.length") None
                .recipe-snippet__time(data-bind="visible: $data.prep_time")

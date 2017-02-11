@@ -30,6 +30,7 @@ do ->
          @numberOfColumns = ko.observable(3)
          @columnClass = ko.computed(@columnClassComputed_)
          @snippetColumns = ko.computed(@snippetColumnsComputed_)
+         @permanentCategories = Config.permanent_categories
          @currentMostRecentPage_ = 0
          @currentFilterResults_ = null
          @currentFilterResultsPage_ = 0
@@ -45,6 +46,11 @@ do ->
          if !@loading() && @currentMostRecentPage_ < Config.number_of_most_recent_pages - 1
             @currentMostRecentPage_ += 1
             @loadMostRecentPage_(@currentMostRecentPage_)
+
+      onTagClicked: (value) =>
+         @filterType(FilterType.Tag)
+         @filterValue(value)
+         @reloadSnippets_()
 
       setup_: ->
          if window.location.search
@@ -74,14 +80,14 @@ do ->
             @loading(false)
 
       loadSnippetsForTag_: (tag) ->
-         InvertedIndex.search tag, ['categories'], (err, results) =>
+         InvertedIndex.searchWithTokens [Utils.standardize(tag)], ['categories'], (err, results) =>
             return if err
             @currentFilterResults_ = results
             @loadNextFilterResults_()
 
       loadSnippetsForSearch_: (search) ->
          return unless search && search.length
-         InvertedIndex.search search.toLowerCase(), null, (err, results) =>
+         InvertedIndex.search search, null, (err, results) =>
             return if err
             @currentFilterResults_ = results
             @loadNextFilterResults_()
@@ -116,8 +122,9 @@ do ->
 
       currentFilterTextComputed_: =>
          return "most recent" if @filterType() == FilterType.MostRecent
-         return @filterValue() if @filterType() == FilterType.Tag
-         return "#{LeftQuote}#{@filterValue()}#{RightQuote}" if @filterType() == FilterType.Search
+         value = @filterValue()?.replace('+', ' ')
+         return value if @filterType() == FilterType.Tag
+         return "#{LeftQuote}#{value}#{RightQuote}" if @filterType() == FilterType.Search
          return null
 
       columnClassComputed_: =>

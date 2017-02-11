@@ -1,24 +1,32 @@
+@import "colors"
 
 .search-bar
    position: relative
-   border: 1px solid #A6A6A6
-   border-radius: 3px
+   display: flex
+   flex-direction: row
+   height: 24px
    width: 200px
-   padding: 4px 8px 4px 26px
+   -webkit-transition: width 500ms
+   transition: width 500ms
+   align-items: center
 
    .search-bar__icon
-      position: absolute
-      width: 12px
-      height: 12px
-      top: 6px
-      left: 6px
+      width: 24px
+      height: 24px
       background-image: url(/images/icon-search@2x.png)
       background-size: contain
+      flex-shrink: 0
 
    .search-bar__input
-      font-size: 12px
-      height: 16px
-      outline: 0
+      height: 100%
+      min-width: 0
+      margin-left: 16px
       border: 0
+      outline: 0
+      border-bottom: 1px solid lightest-gray
+      font-family: 'Open Sans', sans-serif
+      font-weight: 300
+      font-size: 16px
+      color: near-black
 
       

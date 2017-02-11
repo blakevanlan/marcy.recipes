@@ -1,1 +1,1 @@
-window.Config = {"timestamp":1486222355416,"number_of_most_recent_pages":1}
+window.Config = {"timestamp":1486844069058,"permanent_categories":["Appetizers","Entrees","Sides","Dessert","Beverages"],"number_of_most_recent_pages":1}

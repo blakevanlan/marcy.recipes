@@ -25,6 +25,12 @@ tokenize = (value) ->
       value = value.join('-')
    return standardize(value).split('-')
 
+standardizeToken = (value) ->
+   return [] unless value?.length
+   if value instanceof Array
+      return value.map(standardize)
+   return [standardize(value)]
+
 readPaprikaRecipeFile = (filename) ->
    buffer = Fs.readFileSync(filename)
    content = JSON.parse(Zlib.gunzipSync(buffer))
@@ -58,6 +64,7 @@ createRecipeSnippet = (paprikaRecipe) ->
 module.exports = {
    standardize: standardize
    tokenize: tokenize
+   standardizeToken: standardizeToken
    readPaprikaRecipeFile: readPaprikaRecipeFile
    writeBase64Image: writeBase64Image
    createLocalPageUrl: createLocalPageUrl

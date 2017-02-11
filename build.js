@@ -10,7 +10,14 @@ const Utils = require('./build/utils');
 const Assets = require('./build/assets');
 
 const config = {
-   timestamp: Date.now() 
+   timestamp: Date.now(),
+   permanent_categories: [
+      'Appetizers',
+      'Entrees',
+      'Sides',
+      'Dessert',
+      'Beverages'
+   ]
 };
 
 console.log("\nReading recipes:\n");
