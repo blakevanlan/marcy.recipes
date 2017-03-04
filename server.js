@@ -29,11 +29,12 @@ app.get('/recipes/:standardized_recipe_name', function(req, res, next) {
    var paramStandardizedName = req.params.standardized_recipe_name.replace('.html', '')
    for (var i = 0; i < recipeFilenames.length; i++) {
       standardizedName = Utils.standardize(Path.basename(recipeFilenames[i], '.paprikarecipe'));
+      console.log('name', standardizedName);
+      console.log('param', paramStandardizedName);
       if (standardizedName == paramStandardizedName) {
          var filename = Path.join(__dirname, 'recipes', recipeFilenames[i]);
-         Utils.readPaprikaRecipeFile(filename, function(err, paprikaRecipe) {
-            res.render('recipe', paprikaRecipe);
-         });
+         var paprikaRecipe = Utils.readPaprikaRecipeFile(filename);
+         res.render('recipe', paprikaRecipe);
          return;
       }
    }

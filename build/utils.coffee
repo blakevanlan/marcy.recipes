@@ -17,7 +17,7 @@ FIELDS_IN_SNIPPET = [
 standardize = (str) ->
    return str unless str
    firstSegment = str.split('\n')[0]
-   return firstSegment.replace(/[\s-_]/g, '-').replace(/["'\/\(\)\\,]/g, '').toLowerCase()
+   return firstSegment.replace(/[\s-_\n]/g, '-').replace(/["'\/\(\)\\,]/g, '').toLowerCase()
 
 tokenize = (value) ->
    return [] unless value?.length
@@ -37,6 +37,10 @@ readPaprikaRecipeFile = (filename) ->
    content.standardized_name = standardize(content.name)
    content.local_url = createLocalPageUrl(content.standardized_name)
    content.local_photo_url = createLocalPhotoUrl(content.standardized_name) if content.photo_data
+   if content.notes && content.notes.length
+      content.notes = content.notes.split(/\n-+\n/)[0]
+   if content.servings && content.servings.length
+      content.servings = content.servings.match(/[0-9]+/)[0]
    return content
 
 writeBase64Image = (filename, data) ->

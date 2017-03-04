@@ -36,7 +36,6 @@ var manifest = Generator.generateManifest(paprikaRecipes, config);
 Generator.generateMostRecentSnippets(manifest, paprikaRecipes, config);
 Generator.generateInvertedIndex(paprikaRecipes);
 Generator.generateHomePage();
-Generator.generateSearchPage();
 
 for (var i = 0; i < paprikaRecipes.length; i++) {
    Generator.generateRecipePage(paprikaRecipes[i]);

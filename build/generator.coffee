@@ -18,7 +18,6 @@ RECIPES_PER_MOST_RECENT_PAGE = 25
 # Compiled template functions
 indexTemplate = Pug.compileFile(Path.join(__dirname, '../templates/index.pug'))
 recipeTemplate = Pug.compileFile(Path.join(__dirname, '../templates/recipe.pug'))
-searchTemplate = Pug.compileFile(Path.join(__dirname, '../templates/search.pug'))
 
 renderOptions = {
    basedir: Path.join(__dirname, '../templates')
@@ -28,8 +27,6 @@ renderOptions = {
 }
 
 generateManifest = (paprikaRecipes, config) ->
-   console.log paprikaRecipes
-
    manifest = JSON.parse(Fs.readFileSync(MANIFEST_FILENAME).toString());
    existingRecipes = manifest.recipes or {}
    recipes = {}
@@ -68,6 +65,25 @@ generateMostRecentSnippets = (manifest, recipes, config) ->
 
          console.log("Generated most-recent/most-recent-recipes-#{pageNumber}.js")
 
+   categories = {}
+   for recipe, index in recipes
+      continue unless recipe.categories
+      for category in recipe.categories
+         continue if category in config.permanent_categories
+         categories[category] = if categories[category] then categories[category] + 1 else 1
+
+   sortedCategoriesArray = []
+   for category, numberOfOccurances of categories
+      sortedCategoriesArray.push({
+         category: category
+         num_occurances: numberOfOccurances
+      })
+   sortedCategoriesArray.sort (a, b) ->
+      return 1 if a.num_occurances < b.num_occurances
+      return -1 if a.num_occurances > b.num_occurances
+      return 0
+   config.sorted_categories = sortedCategoriesArray
+
    return snippetScripts
 
 generateHomePage = ->
@@ -76,14 +92,6 @@ generateHomePage = ->
    Fs.writeFileSync(filename, html)
 
    console.log("Generated index.html")
-   return html
-
-generateSearchPage = ->
-   html = searchTemplate(renderOptions);
-   filename = Path.join(MAIN_DIRECTORY, "search.html")
-   Fs.writeFileSync(filename, html)
-
-   console.log("Generated search.html")
    return html
 
 generateRecipePage = (paprikaRecipe) -> 
@@ -133,7 +141,6 @@ module.exports = {
    generateManifest: generateManifest
    generateMostRecentSnippets: generateMostRecentSnippets
    generateHomePage: generateHomePage
-   generateSearchPage: generateSearchPage
    generateRecipePage: generateRecipePage
    generateRecipeSnippet: generateRecipeSnippet
    generateInvertedIndex: generateInvertedIndex

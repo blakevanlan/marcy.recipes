@@ -16,7 +16,7 @@
    .search-bar
       position: absolute
       top: 16px
-      right: 16px
+      right: 24px
 
 .title
    position: relative
@@ -25,7 +25,7 @@
    font-size: 36px
    font-family: 'Open Sans', sans-serif
    text-align: center
-   text-transform: lowercase
+   //text-transform: lowercase
    color: near-black
 
    .title__filter
@@ -49,25 +49,26 @@
    
 .sidebar
    height: 100px
-   width: 120px
+   width: 140px
    margin-right: 24px
    flex-shrink: 0
    font-family: 'Open Sans', sans-serif
    
 .categories__heading
    padding: 0
-   margin: 0
+   margin: 0 
    font-size: 18px
    font-weight: 300
    text-align: right
    text-transform: uppercase
    color: near-black
-
+   
 .categories__list
    display: flex
    flex-direction: column
    align-items: flex-end
    border-right: 1px solid lightest-gray
+   margin-bottom: 24px
    padding: 0 12px 0 0
    
    li
@@ -77,18 +78,22 @@
       color: bright-blue
       font-style: italic
       cursor: pointer
+   
+      &:hover
+         color: medium-blue
 
-.recipe-columns
+.content
    display: flex
-   flex-grow: 1;
+   flex: 1 1 0
    flex-direction: row
+   font-family: 'Open Sans', sans-serif
    padding-top: 16px
    border-top: 1px solid lightest-gray
 
 .recipe-column
    display: flex
    flex-direction: column
-   flex: 1 1 auto
+   flex: 1 1 0
 
 .columns-three .recipe-column
    width: 33%
@@ -110,6 +115,8 @@
    font-weight: 700
    font-size: 16px
    color: #333
+   cursor: pointer
+   text-decoration: none
 
 .recipe-snippet__tags
    font-weight: 300
@@ -120,6 +127,9 @@
    color: bright-blue
    cursor: pointer
    
+   &:hover
+      color: medium-blue
+   
 .recipe-snippet__tags-none
    color: medium-gray
 
@@ -127,3 +137,84 @@
    font-weight: 300
    font-size: 14px
    
+.recipe-container
+   display: flex
+   flex: 1 1 0
+   flex-direction: row
+
+.recipe
+   display: flex
+   flex: 1 1 0
+   flex-direction: row
+
+.recipe-metadata
+   flex-shrink: 0 
+   
+.recipe-metadata__time-info-container
+   display: flex
+   flex-direction: row
+   margin-top: 12px
+   
+.recipe-metadata__info
+   border-left: 1px solid lightest-gray
+   padding: 0 16px 
+   text-align: center
+   
+   &:first-child
+      border: 0
+      padding-left: 0
+   
+.recipe-metadata__info-value
+   font-family: 'Open Sans', sans-serif
+   font-size: 18px
+   font-weight: 700
+   text-transform: lowercase
+   
+.recipe-metadata__info-title
+   color: medium-gray
+   font-family: 'Open Sans', sans-serif
+   font-size: 12px
+   font-weight: 300
+   text-transform: lowercase
+
+.recipe-metadata__tags
+   font-family: 'Open Sans', sans-serif
+   font-size: 16px
+   font-weight: 300
+   margin-top: 12px
+
+.recipe-metadata__tags-title
+   color: medium-gray
+
+.recipe-metadata__tag
+   color: #0096e2
+   cursor: pointer
+   text-decoration: none
+   font-style: italic
+      
+.recipe-content
+   margin-left: 24px
+   flex: 1 1 0
+   
+   h2:first-child
+      margin-top: 0
+
+.recent-recipes-sidebar
+   box-sizing: border-box
+   flex-shrink: 0
+   margin-left: 24px
+   width: 140px
+
+.recent-recipes-sidebar__recipe
+   display: block
+   text-decoration: none
+
+.recent-recipes-sidebar__recipe-photo
+   width: 100%
+   
+.recent-recipes-sidebar__recipe-name
+   color: bright-blue
+   font-family: 'Open Sans', sans-serif
+   font-size: 14px
+   font-weight: 300
+   padding: 6px 0 16px

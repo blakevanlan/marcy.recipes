@@ -18,13 +18,19 @@ block content
             li 
                a(data-bind="text: $data, click: $parent.onTagClicked")
 
-      .recipe-columns(data-bind="foreach: snippetColumns, css: columnClass, \
+         h2.categories__heading Top Tags
+         ul.categories__list(data-bind="foreach: topCategories")
+            li 
+               a(data-bind="text: category, click: $parent.onTagClicked")
+
+      .content(data-bind="foreach: snippetColumns, css: columnClass, \
             scrolledToBottom: onScrolledToBottom")
          .recipe-column(data-bind="foreach: $data")
-            .recipe-snippet(data-bind="attr: {href: local_url}")
-               img.recipe-snippet__photo(data-bind="visible: $data.local_photo_url, \
+            .recipe-snippet(data-bind="attr: {href: local_url}, click: $root.onRecipeClicked")
+               a(data-bind="attr: {href: $data.local_url}")
+                  img.recipe-snippet__photo(data-bind="visible: $data.local_photo_url, \
                      attr:{src: $data.local_photo_url}")
-               .recipe-snippet__name(data-bind="text: name")
+               a.recipe-snippet__name(data-bind="text: name, attr: {href: $data.local_url}")
                .recipe-snippet__tags
                   span.recipe-snippet__tags-title Tags:&nbsp;
                   span(data-bind="foreach: $data.categories")
