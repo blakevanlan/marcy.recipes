@@ -59,6 +59,7 @@ do ->
          @pushHistory_('tag', @filterValue())
          
       onSortedTagClicked: (value) =>
+         console.log("VALUE", value)
          @onTagClicked(value.category)
 
       pushHistory_: (fieldName, value) ->

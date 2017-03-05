@@ -21,7 +21,7 @@ block content
          h2.categories__heading Top Tags
          ul.categories__list(data-bind="foreach: topCategories")
             li 
-               a(data-bind="text: category, click: $parent.onTagClicked")
+               a(data-bind="text: category, click: $parent.onSortedTagClicked")
 
       .content(data-bind="foreach: snippetColumns, css: columnClass, \
             scrolledToBottom: onScrolledToBottom")
