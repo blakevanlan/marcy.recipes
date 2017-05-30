@@ -8,9 +8,8 @@ ASSET_DIRECTORY = Path.join(__dirname, '../docs');
 
 ASSET_FILENAMES = [
    'main.css',
-   'index-bootstrap.js'
+   'index-bootstrap.js',
    'recipe-bootstrap.js'
-   'search-bootstrap.js'
 ]
 
 compileAssets = -> 
@@ -18,6 +17,8 @@ compileAssets = ->
    ChildProcess.execFileSync(CONNECT_ASSETS_EXECUTABLE, {stdio: [0, 1, 2]})
    manifest = require(Path.join(BUILT_ASSET_DIRECTORY, 'manifest.json'))
    
+   console.log("filename: ")
+
    for filename in ASSET_FILENAMES
       actualFilename = manifest.assets[filename]
       from = Path.join(BUILT_ASSET_DIRECTORY, actualFilename)
