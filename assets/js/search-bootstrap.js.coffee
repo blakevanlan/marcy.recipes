@@ -1,1 +1,0 @@
-#= require data/inverted-index.js.coffee

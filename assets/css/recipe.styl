@@ -1,0 +1,121 @@
+@import "colors"
+
+.recipe-container
+   display: flex
+   flex: 1 1 0
+   flex-direction: row
+
+.recipe
+   display: flex
+   flex: 1 1 0
+   flex-direction: row
+
+.recipe-metadata
+  flex-shrink: 0 
+   
+.recipe-metadata__time-info-container
+   display: flex
+   flex-direction: row
+   margin-top: 12px
+   
+.recipe-metadata__info
+   border-left: 1px solid lightest-gray
+   padding: 0 16px 
+   text-align: center
+   
+   &:first-child
+      border: 0
+      padding-left: 0
+   
+.recipe-metadata__info-value
+   font-family: 'Open Sans', sans-serif
+   font-size: 18px
+   font-weight: 700
+   text-transform: lowercase
+   
+.recipe-metadata__info-title
+   color: medium-gray
+   font-family: 'Open Sans', sans-serif
+   font-size: 12px
+   font-weight: 300
+   text-transform: lowercase
+
+.recipe-metadata__tags
+   font-family: 'Open Sans', sans-serif
+   font-size: 16px
+   font-weight: 300
+   margin-top: 12px
+
+.recipe-metadata__tags-title
+   color: medium-gray
+
+.recipe-metadata__tag
+   color: #0096e2
+   cursor: pointer
+   text-decoration: none
+   font-style: italic
+      
+.recipe-content
+   margin-left: 24px
+   flex: 1 1 0
+   
+   h2:first-child
+      margin-top: 0
+
+.recent-recipes-sidebar
+   box-sizing: border-box
+   flex-shrink: 0
+   margin-left: 24px
+   width: 140px
+
+.recent-recipes-sidebar__recipe
+   display: block
+   text-decoration: none
+
+.recent-recipes-sidebar__recipe-photo
+   width: 100%
+   
+.recent-recipes-sidebar__recipe-name
+   color: bright-blue
+   font-family: 'Open Sans', sans-serif
+   font-size: 14px
+   font-weight: 300
+   padding: 6px 0 16px
+   
+@media (max-width: 1100px)
+   .recipe-container
+      display block
+   
+   .recent-recipes-sidebar
+      display flex
+      width: 100%
+      margin: 52px 24px 0 0
+      box-sizing: border-box
+      flex-direction: row
+      flex-shrink: 0
+      justify-content: space-between
+      
+      .recent-recipes-sidebar__recipe
+         display: block
+         text-decoration: none
+         padding: 8px
+         
+         &:first-child
+            padding-left: 0
+            
+         &:last-child
+            padding-right: 0
+
+@media (max-width: 825px)
+   .recipe
+      flex-direction: column
+      
+   .recipe-content
+      margin: 24px 0 0 0
+
+@media (max-width: 600px)   
+   .recipe-metadata__photo
+      text-align: center
+   
+   .recipe-metadata__time-info-container
+      justify-content: center

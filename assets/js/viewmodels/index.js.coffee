@@ -74,14 +74,8 @@ do ->
             @loadSnippetsForQuerystring_()
 
          # Change the number of columns based on the browser width.
-         window.addEventListener 'resize', =>
-            width = $(window).width()
-            columns = switch 
-              when width < 400 then 1
-              when width < 750 then 2
-              when width < 1100 then 3
-              else 4
-            @numberOfColumns(columns)
+         window.addEventListener('resize', @setNumberOfColumns_)
+         @setNumberOfColumns_()
 
          @loadSnippetsForQuerystring_()
 
@@ -163,6 +157,15 @@ do ->
          return "#{LeftQuote}#{value}#{RightQuote}" if @filterType() == FilterType.Search
          return null
 
+      setNumberOfColumns_: =>
+         width = $(window).width()
+         columns = switch 
+           when width < 600 then 1
+           when width < 750 then 2
+           when width < 1100 then 3
+           else 4
+         @numberOfColumns(columns)
+
       columnClassComputed_: =>
          return switch @numberOfColumns()
             when 1 then "columns-one"
@@ -182,6 +185,8 @@ do ->
             columns[index % numberOfColumns].push(snippet)
 
          return columns
+
+
 
 
    window.IndexViewModel = IndexViewModel

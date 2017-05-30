@@ -1,0 +1,49 @@
+@import "colors"
+
+.recipe-column
+   display: flex
+   flex-direction: column
+   flex: 1 1 0
+
+.columns-three .recipe-column
+   width: 33%
+
+.recipe-snippet
+   box-sizing: border-box
+   font-family: 'Open Sans', sans-serif
+   padding: 12px
+   width: 100%
+   
+   &:hover
+      background: near-white
+
+.recipe-snippet__photo
+   width: 100%
+   margin-bottom: 12px
+
+.recipe-snippet__name
+   font-weight: 700
+   font-size: 16px
+   color: #333
+   cursor: pointer
+   text-decoration: none
+
+.recipe-snippet__tags
+   font-weight: 300
+   font-size: 14px
+   
+.recipe-snippet__tags-link
+   font-style: italic
+   color: bright-blue
+   cursor: pointer
+   
+   &:hover
+      color: medium-blue
+   
+.recipe-snippet__tags-none
+   color: medium-gray
+
+.recipe-snippet__time
+   font-weight: 300
+   font-size: 14px
+   

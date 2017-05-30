@@ -7,6 +7,9 @@ block content
    .header
       h1.title= name
       search-bar(params="callback: onSearch")   
+      if source_url && source_url.length && source && source.length
+         .subtitle
+            a(href=source_url)= source
 
    .container
       .sidebar

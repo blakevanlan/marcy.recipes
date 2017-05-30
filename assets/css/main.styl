@@ -1,11 +1,5 @@
-//= require normalize
-//= require components
-
 @import "colors"
 
-/**
- * Index.html
- */
 .top-highlight
    height: 10px
    background: dark-blue
@@ -15,8 +9,9 @@
 
    .search-bar
       position: absolute
-      top: 16px
+      top: 12px
       right: 24px
+      width: 200px
 
 .title
    position: relative
@@ -38,22 +33,46 @@
    .title__text
       font-weight: 700
 
+.subtitle
+   color: bright-blue
+   position: absolute
+   left: 24px
+   right: 24px
+   bottom: 14px
+   font-family: 'Open Sans', sans-serif
+   font-style: italic
+   font-weight: 300
+   font-size: 14px
+   text-align: center
+   text-decoration: none
+   
+   a
+      color: bright-blue
+      text-decoration: none
+      
+      &:hover
+         color: medium-blue
 
-/**
- * Main page.
- */ 
 .container
    display: flex
    flex-direction: row
    padding 0 24px
-   
+
+.content
+   display: flex
+   flex: 1 1 0
+   flex-direction: row
+   font-family: 'Open Sans', sans-serif
+   padding-top: 16px
+   border-top: 1px solid lightest-gray
+
 .sidebar
-   height: 100px
+   min-height: 100px
    width: 140px
    margin-right: 24px
    flex-shrink: 0
    font-family: 'Open Sans', sans-serif
-   
+
 .categories__heading
    padding: 0
    margin: 0 
@@ -81,140 +100,23 @@
    
       &:hover
          color: medium-blue
+         
+@media (max-width: 900px)
+   .header .title
+      font-size: 28px
 
-.content
-   display: flex
-   flex: 1 1 0
-   flex-direction: row
-   font-family: 'Open Sans', sans-serif
-   padding-top: 16px
-   border-top: 1px solid lightest-gray
+@media (max-width: 750px)
+   .header
+      .title
+         padding-top: 56px
+         font-size: 24px
+         
+      .search-bar
+         right: inherit
+         bottom: 16px
+         margin: 0 0 0 -100px
+         left: 50%
 
-.recipe-column
-   display: flex
-   flex-direction: column
-   flex: 1 1 0
-
-.columns-three .recipe-column
-   width: 33%
-
-.recipe-snippet
-   box-sizing: border-box
-   font-family: 'Open Sans', sans-serif
-   padding: 12px
-   width: 100%
-   
-   &:hover
-      background: near-white
-
-.recipe-snippet__photo
-   width: 100%
-   margin-bottom: 12px
-
-.recipe-snippet__name
-   font-weight: 700
-   font-size: 16px
-   color: #333
-   cursor: pointer
-   text-decoration: none
-
-.recipe-snippet__tags
-   font-weight: 300
-   font-size: 14px
-   
-.recipe-snippet__tags-link
-   font-style: italic
-   color: bright-blue
-   cursor: pointer
-   
-   &:hover
-      color: medium-blue
-   
-.recipe-snippet__tags-none
-   color: medium-gray
-
-.recipe-snippet__time
-   font-weight: 300
-   font-size: 14px
-   
-.recipe-container
-   display: flex
-   flex: 1 1 0
-   flex-direction: row
-
-.recipe
-   display: flex
-   flex: 1 1 0
-   flex-direction: row
-
-.recipe-metadata
-   flex-shrink: 0 
-   
-.recipe-metadata__time-info-container
-   display: flex
-   flex-direction: row
-   margin-top: 12px
-   
-.recipe-metadata__info
-   border-left: 1px solid lightest-gray
-   padding: 0 16px 
-   text-align: center
-   
-   &:first-child
-      border: 0
-      padding-left: 0
-   
-.recipe-metadata__info-value
-   font-family: 'Open Sans', sans-serif
-   font-size: 18px
-   font-weight: 700
-   text-transform: lowercase
-   
-.recipe-metadata__info-title
-   color: medium-gray
-   font-family: 'Open Sans', sans-serif
-   font-size: 12px
-   font-weight: 300
-   text-transform: lowercase
-
-.recipe-metadata__tags
-   font-family: 'Open Sans', sans-serif
-   font-size: 16px
-   font-weight: 300
-   margin-top: 12px
-
-.recipe-metadata__tags-title
-   color: medium-gray
-
-.recipe-metadata__tag
-   color: #0096e2
-   cursor: pointer
-   text-decoration: none
-   font-style: italic
-      
-.recipe-content
-   margin-left: 24px
-   flex: 1 1 0
-   
-   h2:first-child
-      margin-top: 0
-
-.recent-recipes-sidebar
-   box-sizing: border-box
-   flex-shrink: 0
-   margin-left: 24px
-   width: 140px
-
-.recent-recipes-sidebar__recipe
-   display: block
-   text-decoration: none
-
-.recent-recipes-sidebar__recipe-photo
-   width: 100%
-   
-.recent-recipes-sidebar__recipe-name
-   color: bright-blue
-   font-family: 'Open Sans', sans-serif
-   font-size: 14px
-   font-weight: 300
-   padding: 6px 0 16px
+@media (max-width: 600px)         
+   .container .sidebar
+      display: none
