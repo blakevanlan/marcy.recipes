@@ -17,7 +17,8 @@ FIELDS_IN_SNIPPET = [
 standardize = (str) ->
    return str unless str
    firstSegment = str.split('\n')[0]
-   return firstSegment.replace(/[\s-_\n]/g, '-').replace(/["'\/\(\)\\,]/g, '').toLowerCase()
+   return firstSegment.replace(/[\s-_\n&]+/g, '-').replace(/["'\/\(\)\\,:?!^%#@*]/g, '')
+         .replace(/[-]+/g, '-').replace(/-$/, '').toLowerCase()
 
 tokenize = (value) ->
    return [] unless value?.length

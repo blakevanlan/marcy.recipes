@@ -19,13 +19,6 @@ RECIPES_PER_MOST_RECENT_PAGE = 25
 indexTemplate = Pug.compileFile(Path.join(__dirname, '../templates/index.pug'))
 recipeTemplate = Pug.compileFile(Path.join(__dirname, '../templates/recipe.pug'))
 
-renderOptions = {
-   basedir: Path.join(__dirname, '../templates')
-   isProduction: true
-   css: (file) -> return '<link rel="stylesheet" href="/' + file + '.css">'
-   js: (file) -> return '<script src="/' + file + '.js"></script>'
-}
-
 generateManifest = (paprikaRecipes, config) ->
    manifest = JSON.parse(Fs.readFileSync(MANIFEST_FILENAME).toString());
    existingRecipes = manifest.recipes or {}
@@ -86,15 +79,15 @@ generateMostRecentSnippets = (manifest, recipes, config) ->
 
    return snippetScripts
 
-generateHomePage = ->
-   html = indexTemplate(renderOptions);
+generateHomePage = (config) ->
+   html = indexTemplate(createRenderOptionsForConfig(config));
    filename = Path.join(MAIN_DIRECTORY, "index.html")
    Fs.writeFileSync(filename, html)
 
    console.log("Generated index.html")
    return html
 
-generateRecipePage = (paprikaRecipe) -> 
+generateRecipePage = (paprikaRecipe, config) -> 
    standardizedName = paprikaRecipe.standardized_name
 
    # Write the image file to disk.
@@ -103,7 +96,7 @@ generateRecipePage = (paprikaRecipe) ->
       Utils.writeBase64Image(imageFilename, paprikaRecipe.photo_data)
    
    # Generate the recipe page.
-   options = Object.assign({}, renderOptions, paprikaRecipe)
+   options = Object.assign({}, createRenderOptionsForConfig(config), paprikaRecipe)
    recipeHtml = recipeTemplate(options)
    recipeFilename = Path.join(RECIPES_DIRECTORY, "#{standardizedName}.html")
    Fs.writeFileSync(recipeFilename, recipeHtml)
@@ -135,6 +128,14 @@ generateJsConfig = (config) ->
 
    console.log("Generated assets/js/config.js.coffee")
    return script
+
+createRenderOptionsForConfig = (config) ->
+   return {
+      basedir: Path.join(__dirname, '../templates')
+      isProduction: true
+      css: (file) -> return "<link rel=\"stylesheet\" href=\"/#{file}.css?#{config.timestamp}\">"
+      js: (file) -> return "<script src=\"/#{file}.js?#{config.timestamp}\"></script>"
+   }
 
 
 module.exports = {

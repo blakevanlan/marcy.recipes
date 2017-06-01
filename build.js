@@ -35,10 +35,10 @@ console.log("\nGenerating content:\n");
 var manifest = Generator.generateManifest(paprikaRecipes, config);
 Generator.generateMostRecentSnippets(manifest, paprikaRecipes, config);
 Generator.generateInvertedIndex(paprikaRecipes);
-Generator.generateHomePage();
+Generator.generateHomePage(config);
 
 for (var i = 0; i < paprikaRecipes.length; i++) {
-   Generator.generateRecipePage(paprikaRecipes[i]);
+   Generator.generateRecipePage(paprikaRecipes[i], config);
    Generator.generateRecipeSnippet(paprikaRecipes[i]);
 }
 
