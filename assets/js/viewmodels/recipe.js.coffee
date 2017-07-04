@@ -16,10 +16,13 @@ do ->
          @setup_()
 
       onSearch: (search) ->
-         window.location.href = "/index.html?search=#{search}"
+         window.location.href = "/index.html?search=#{search.replace(/\s/g, '+').toLowerCase()}"
       
-      onTagClicked: (tag) ->
-         window.location.href = "/index.html?tag=#{tag}"
+      onTagClicked: (value) =>
+         window.location.href = "/index.html?tag=#{value.replace(/\s/g, '+').toLowerCase()}"
+         
+      onSortedTagClicked: (value) =>
+         @onTagClicked(value.category)
 
       setup_: ->
          MostRecentRegistry.loadPage 0, (err, snippets) =>

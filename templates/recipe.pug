@@ -5,11 +5,11 @@ block head
 
 block content
    .header
-      h1.title= name
+      h1.title= recipe.name
       search-bar(params="callback: onSearch")   
-      if source_url && source_url.length && source && source.length
+      if recipe.source_url && recipe.source_url.length && recipe.source && recipe.source.length
          .subtitle
-            a(href=source_url)= source
+            a(href=recipe.source_url)= recipe.source
 
    .container
       .sidebar
@@ -21,55 +21,55 @@ block content
          h2.categories__heading Top Tags
          ul.categories__list(data-bind="foreach: topCategories")
             li 
-               a(data-bind="text: category, click: $parent.onTagClicked")
+               a(data-bind="text: category, click: $parent.onSortedTagClicked")
 
       .content
          .recipe-container
             .recipe
                .recipe-metadata
                   .recipe-metadata__photo
-                     img.recipe-photo(src=local_photo_url)
+                     img.recipe-photo(src=recipe.local_photo_url)
 
                   .recipe-metadata__time-info-container
-                     if prep_time && prep_time.length
+                     if recipe.prep_time && recipe.prep_time.length
                         .recipe-metadata__info
-                           .recipe-metadata__info-value= prep_time
+                           .recipe-metadata__info-value= recipe.prep_time
                            .recipe-metadata__info-title Prep Time
-                     if cook_time && cook_time.length
+                     if recipe.cook_time && recipe.cook_time.length
                         .recipe-metadata__info
-                           .recipe-metadata__info-value= cook_time
+                           .recipe-metadata__info-value= recipe.cook_time
                            .recipe-metadata__info-title Cook Time
-                     if total_time && total_time.length
+                     if recipe.total_time && recipe.total_time.length
                         .recipe-metadata__info
-                           .recipe-metadata__info-value= total_time
+                           .recipe-metadata__info-value= recipe.total_time
                            .recipe-metadata__info-title Total Time
-                     if servings && servings.length
+                     if recipe.servings && recipe.servings.length
                         .recipe-metadata__info
-                           .recipe-metadata__info-value= servings
+                           .recipe-metadata__info-value= recipe.servings
                            .recipe-metadata__info-title Servings
 
-                  if categories && categories.length
+                  if recipe.categories && recipe.categories.length
                      .recipe-metadata__tags
                         span.recipe-metadata__tags-title Tags:&nbsp;
-                        each category, index in categories
-                           a.recipe-metadata__tag(href="/index.html?tag=" + category)= category
-                           if index < categories.length - 1
+                        each category, index in recipe.categories
+                           a.recipe-metadata__tag(href="/index.html?tag=" + category.replace(/\s/g, '+'))= category
+                           if index < recipe.categories.length - 1
                               span ,&nbsp;
 
                .recipe-content
                   h2 Ingredients
                   ul
-                     each ingredient in ingredients.split('\n')
+                     each ingredient in recipe.ingredients.split('\n')
                         li= ingredient
 
                   h2 Directions
-                  each paragraph in directions.split('\n')
+                  each paragraph in recipe.directions.split('\n')
                      if paragraph.length
                         p= paragraph
 
-                  if notes && notes.length
+                  if recipe.notes && recipe.notes.length
                      h2 Notes
-                     each paragraph in notes.split('\n')
+                     each paragraph in recipe.notes.split('\n')
                         if paragraph.length
                            p= paragraph
 

@@ -30,6 +30,10 @@ for (var i = 0; i < filenames.length; i++) {
 }
 console.log("Found " + paprikaRecipes.length + " recipes.")
 
+console.log("Removing old recipe files...")
+
+Generator.removeOldAssets(paprikaRecipes);
+
 console.log("\nGenerating content:\n");
 
 var manifest = Generator.generateManifest(paprikaRecipes, config);

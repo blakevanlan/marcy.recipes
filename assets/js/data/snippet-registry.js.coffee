@@ -1,4 +1,7 @@
+#= require config.js.coffee
+
 do ->
+   Config = window.Config
 
    class SnippetRegistry
       constructor: ->
@@ -53,7 +56,7 @@ do ->
          # Check if we are already loading the snippet.
          return if @scriptTagsById_[id]
          scriptTag = document.createElement('script');
-         scriptTag.src = "/snippets/#{id}.js"
+         scriptTag.src = "/snippets/#{id}.js?#{Config.timestamp}"
          scriptTag.type = "text/javascript"
          document.getElementsByTagName("head")[0].appendChild(scriptTag)
          @scriptTagsById_[id] = scriptTag

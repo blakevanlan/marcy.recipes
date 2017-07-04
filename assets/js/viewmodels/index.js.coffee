@@ -16,8 +16,8 @@ do ->
       Tag: 'tag'
       Search: 'search'
    }
-   LeftQuote = "“"
-   RightQuote = "”"
+   LeftQuote = '\u201c'
+   RightQuote = '\u201d'
    SearchResultsPerPage = 25
 
    class IndexViewModel
@@ -59,7 +59,6 @@ do ->
          @pushHistory_('tag', @filterValue())
          
       onSortedTagClicked: (value) =>
-         console.log("VALUE", value)
          @onTagClicked(value.category)
 
       pushHistory_: (fieldName, value) ->

@@ -42,6 +42,7 @@ readPaprikaRecipeFile = (filename) ->
       content.notes = content.notes.split(/\n-+\n/)[0]
    if content.servings && content.servings.length
       content.servings = content.servings.match(/[0-9]+/)[0]
+   content.categories = content.categories or []
    return content
 
 writeBase64Image = (filename, data) ->

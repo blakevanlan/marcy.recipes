@@ -7,6 +7,7 @@ const Express = require('express');
 const Path = require('path');
 const Fs = require('fs');
 const Utils = require('./build/utils');
+const Config = Fs.readFileSync("assets/js/config.js.coffee");
 
 const app = Express();
 
@@ -34,7 +35,7 @@ app.get('/recipes/:standardized_recipe_name', function(req, res, next) {
       if (standardizedName == paramStandardizedName) {
          var filename = Path.join(__dirname, 'recipes', recipeFilenames[i]);
          var paprikaRecipe = Utils.readPaprikaRecipeFile(filename);
-         res.render('recipe', paprikaRecipe);
+         res.render('recipe', {config: Config, recipe: paprikaRecipe});
          return;
       }
    }

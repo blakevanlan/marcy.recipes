@@ -1,6 +1,8 @@
+#= require config.js.coffee
 #= require data/snippet-registry.js.coffee
 
 do ->
+   Config = window.Config
    SnippetRegistry = window.SnippetRegistry
 
    class MostRecentRegistry
@@ -34,7 +36,7 @@ do ->
          # Check if we are already loading the snippet.
          return if @scriptTagsByPageNumber_[pageNumber]
          scriptTag = document.createElement('script');
-         scriptTag.src = "/most-recent/most-recent-recipes-#{pageNumber}.js"
+         scriptTag.src = "/most-recent/most-recent-recipes-#{pageNumber}.js?#{Config.timestamp}"
          scriptTag.type = "text/javascript"
          document.getElementsByTagName("head")[0].appendChild(scriptTag)
          @scriptTagsByPageNumber_[pageNumber] = scriptTag      

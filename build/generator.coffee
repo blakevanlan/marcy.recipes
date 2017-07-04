@@ -80,7 +80,9 @@ generateMostRecentSnippets = (manifest, recipes, config) ->
    return snippetScripts
 
 generateHomePage = (config) ->
-   html = indexTemplate(createRenderOptionsForConfig(config));
+   options = {config: config}
+   options = Object.assign(options, createRenderOptionsForConfig(config))
+   html = indexTemplate(options);
    filename = Path.join(MAIN_DIRECTORY, "index.html")
    Fs.writeFileSync(filename, html)
 
@@ -96,7 +98,8 @@ generateRecipePage = (paprikaRecipe, config) ->
       Utils.writeBase64Image(imageFilename, paprikaRecipe.photo_data)
    
    # Generate the recipe page.
-   options = Object.assign({}, createRenderOptionsForConfig(config), paprikaRecipe)
+   options = {config: config, recipe: paprikaRecipe}
+   options = Object.assign(options, createRenderOptionsForConfig(config))
    recipeHtml = recipeTemplate(options)
    recipeFilename = Path.join(RECIPES_DIRECTORY, "#{standardizedName}.html")
    Fs.writeFileSync(recipeFilename, recipeHtml)
@@ -129,12 +132,31 @@ generateJsConfig = (config) ->
    console.log("Generated assets/js/config.js.coffee")
    return script
 
+removeOldAssets = (paprikaRecipes) ->
+   standardizedNames = {};
+   for paprikaRecipe in paprikaRecipes
+      standardizedNames[paprikaRecipe.standardized_name] = true
+   
+   folders = [IMAGES_DIRECTORY, RECIPES_DIRECTORY, SNIPPETS_DIRECTORY]
+   for folder in folders 
+      removeOldAssetsFromFolder(standardizedNames, folder)
+
+removeOldAssetsFromFolder = (standardizedNames, path) ->
+   filesInFolder = Fs.readdirSync(path)
+   for file in filesInFolder
+      filename = Path.basename(file).replace(Path.extname(file), '')
+      unless standardizedNames[filename]
+         Fs.unlinkSync(Path.join(path, file)) 
+         console.log("Removed #{Path.join(path, file)}")
+
 createRenderOptionsForConfig = (config) ->
    return {
       basedir: Path.join(__dirname, '../templates')
       isProduction: true
       css: (file) -> return "<link rel=\"stylesheet\" href=\"/#{file}.css?#{config.timestamp}\">"
-      js: (file) -> return "<script src=\"/#{file}.js?#{config.timestamp}\"></script>"
+      js: (file, params = {}) ->
+         paramsString = ("#{key}=\"#{value}\"" for key, value of params).join(" ")
+         return "<script src=\"/#{file}.js?#{config.timestamp}\" #{paramsString}></script>"
    }
 
 
@@ -146,4 +168,5 @@ module.exports = {
    generateRecipeSnippet: generateRecipeSnippet
    generateInvertedIndex: generateInvertedIndex
    generateJsConfig: generateJsConfig
+   removeOldAssets: removeOldAssets
 }

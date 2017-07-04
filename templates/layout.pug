@@ -19,7 +19,7 @@ html
       block head
 
       //- Inverted index has to be generated with ./build.js
-      script(src="/inverted-index.js", async="true")
+      script(src="/inverted-index.js?#{config.timestamp}", async="true")
 
    body
       .top-highlight
