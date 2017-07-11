@@ -5,7 +5,7 @@ block head
 
 block content
    .header
-      .logo
+      a.logo(href="/index.html")
       h1.title= recipe.name
       search-bar(params="callback: onSearch")   
       if recipe.source_url && recipe.source_url.length && recipe.source && recipe.source.length
