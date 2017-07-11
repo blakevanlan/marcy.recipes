@@ -13,14 +13,23 @@
       right: 24px
       width: 200px
 
+.logo
+   background-image: url("/images/logo@2x.png")
+   background-size: contain
+   background-repeat: no-repeat
+   position: absolute
+   height: 96px
+   width: 96px
+   top: 18px
+   left: 62px
+
 .title
    position: relative
-   padding: 36px 0
+   padding: 36px 186px
    margin: 0
    font-size: 36px
    font-family: 'Open Sans', sans-serif
    text-align: center
-   //text-transform: lowercase
    color: near-black
 
    .title__filter
@@ -102,19 +111,37 @@
          color: medium-blue
          
 @media (max-width: 900px)
-   .header .title
-      font-size: 28px
+   .header
+      .logo
+         position: absolute
+         height: 80px
+         width: 80px
+         top: 20px
+         left: 75px
+      .title
+         font-size: 28px
 
 @media (max-width: 750px)
    .header
+      .logo
+         background-position: center
+         position: static
+         display: block
+         height: 220px
+         width: auto
+         top: 0
+         left: 0
+         
       .title
-         padding-top: 56px
+         padding: 36px 20px
          font-size: 24px
          
       .search-bar
+         margin: 0 0 0 -100px
+         top: 212px
+         
          right: inherit
          bottom: 16px
-         margin: 0 0 0 -100px
          left: 50%
 
 @media (max-width: 600px)         
