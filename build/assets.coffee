@@ -14,7 +14,10 @@ ASSET_FILENAMES = [
 
 compileAssets = -> 
    ChildProcess.execFileSync('rm', ['-rf', BUILT_ASSET_DIRECTORY])
-   ChildProcess.execFileSync(CONNECT_ASSETS_EXECUTABLE, {stdio: [0, 1, 2]})
+   ChildProcess.execFileSync(CONNECT_ASSETS_EXECUTABLE, {
+      stdio: [0, 1, 2],
+      cwd: Path.join(__dirname, '../')
+   })
    manifest = require(Path.join(BUILT_ASSET_DIRECTORY, 'manifest.json'))
 
    for filename in ASSET_FILENAMES
