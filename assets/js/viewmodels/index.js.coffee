@@ -16,8 +16,8 @@ do ->
       Tag: 'tag'
       Search: 'search'
    }
-   LeftQuote = '\u201c'
-   RightQuote = '\u201d'
+   LeftQuote = '“'
+   RightQuote = '”'
    SearchResultsPerPage = 25
 
    class IndexViewModel
@@ -153,7 +153,7 @@ do ->
          return "most recent" if @filterType() == FilterType.MostRecent
          value = @filterValue()?.replace('+', ' ')
          return value if @filterType() == FilterType.Tag
-         return "#{LeftQuote}#{value}#{RightQuote}" if @filterType() == FilterType.Search
+         return "'#{value}'" if @filterType() == FilterType.Search
          return null
 
       setNumberOfColumns_: =>
@@ -184,8 +184,6 @@ do ->
             columns[index % numberOfColumns].push(snippet)
 
          return columns
-
-
 
 
    window.IndexViewModel = IndexViewModel
